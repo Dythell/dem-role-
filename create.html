@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Создание заявки</title>
+</head>
+<body>
+    <h2>Создание заявки</h2>
+        <a href="create.html">Создание заявки</a>
+        <a href="orders.html">Список заявок</a>
+        <a href="update.html">Обновление заявки</a>
+        <a href="stat.html" id="statLink">Статистика</a>
+    <iframe name="frame" style="display: none;"></iframe>
+    <form target="frame" action="http://localhost:5222/create" method="get" id="createForm">
+        <input required placeholder="Номер" type="number" name="number" /><br />
+        <label for="startDate">Дата начала</label><br />
+        <input required type="date" name="startDate" /><br />
+        <input required placeholder="Оборудование" type="text" name="device" /><br />
+        <input required placeholder="Тип проблемы" type="text" name="problemType" /><br />
+        <input required placeholder="Описание" type="text" name="description" /><br />
+        <input required placeholder="Клиент" type="text" name="client" /><br />
+        <label for="status">Статус</label><br />
+        <select name="status">
+            <option>в ожидании</option>
+            <option>в работе</option>
+        </select><br />
+        <input type="submit" value="Создание" />
+    </form>
+</body>
+<script>
+    if (!sessionStorage.getItem("token")) {
+        window.location.href = "auth.html";
+    }
+
+    const userRole = sessionStorage.getItem("role");
+
+    if (userRole === "user") {
+        alert("У вас нет доступа к созданию заявок.");
+        window.location.href = "orders.html";
+    }
+
+    if (userRole !== "admin") {
+        document.getElementById("statLink").style.display = "none";
+    }
+</script>
+<style>
+
+</style>
+</html>
